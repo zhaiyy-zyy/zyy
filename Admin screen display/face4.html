@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Analysis with Feedback</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    #container {
+      display: flex;
+      width: 80%;
+      height: 60%;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #image-view {
+      width: 50%;
+      height: 100%;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    #image-view img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+
+    #face-box {
+      position: absolute;
+      width: 70%;
+      height: 70%;
+      border: 2px solid blue;
+    }
+
+    #status {
+      width: 50%;
+      height: 100%;
+      background-color: #d3d3d3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* 垂直居中 */
+      align-items: center; /* 水平居中 */
+      padding: 20px;
+      color: black;
+      text-align: center; /* 文字居中 */
+    }
+
+    #status-heading {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    #status-details {
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+
+    #feedback {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- The face picture is displayed on the left -->
+    <div id="image-view">
+      <img id="face-image" src="face.jpg" alt="Face Image">
+      <div id="face-box"></div>
+    </div>
+    <!-- The detection result is displayed on the right -->
+    <div id="status">
+      <div id="status-heading">Analysis finished.</div>
+      <div id="status-details">
+        Model result:<br>
+        Age: <span id="age">35</span><br>
+        Gender: <span id="gender">Female</span><br>
+        Ethnicity: <span id="ethnicity">Asian</span><br>
+        Emotion: <span id="emotion">Happy</span>
+      </div>
+      <div id="feedback">Waiting for feedback.</div>
+    </div>
+  </div>
+
+  <script>
+    // Simulated data update function
+    function updateModelResult(imageSrc, age, gender, ethnicity, emotion) {
+      document.getElementById("face-image").src = imageSrc; // update face image
+      document.getElementById("age").textContent = age;
+      document.getElementById("gender").textContent = gender;
+      document.getElementById("ethnicity").textContent = ethnicity;
+      document.getElementById("emotion").textContent = emotion;
+    }
+
+    // Simulated real-time data (updated every 3 seconds)
+    setInterval(() => {
+      // Random image
+      const imageSources = [
+        "face1.jpg",
+        "face2.jpg",
+        "face3.jpg",
+        "face4.jpg"
+      ];
+      const imageSrc = imageSources[Math.floor(Math.random() * imageSources.length)];
+      const age = Math.floor(Math.random() * 60) + 18; // Random age
+      const gender = Math.random() > 0.5 ? "Female" : "Male"; // Random gender
+      const ethnicity = ["Asian", "White", "Indian", "Black", "Other"][Math.floor(Math.random() * 5)];
+      const emotion = ["Happy", "Neutral", "Sad", "Angry"][Math.floor(Math.random() * 4)];
+
+      updateModelResult(imageSrc, age, gender, ethnicity, emotion);
+    }, 3000);
+
+    // Initializes the detection box style
+    document.getElementById("face-box").style.borderColor = "blue";
+  </script>
+</body>
+</html>
